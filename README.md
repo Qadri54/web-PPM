@@ -1,58 +1,121 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Pusat Penjaminan Mutu - Poltekkes Kemenkes Medan
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Daftar Isi
 
-## About Laravel
+- [Penjelasan Singkat](#penjelasan-singkat)
+- [Tech Stack](#tech-stack)
+- [Alur Aplikasi (Sequence Diagram)](#alur-aplikasi-sequence-diagram)
+- [Database & ERD (Entity Relationship Diagram)](#database--erd-entity-relationship-diagram)
+- [Setup Project](#setup-project)
+- [Bagaimana Menjalankan Seeder](#bagaimana-menjalankan-seeder)
+- [Mapping Menu Admin ke Frontend](#mapping-menu-admin-ke-frontend)
+- [Penjelasan RBAC (Role-Based Access Control)](#penjelasan-rbac-role-based-access-control)
+- [Design System](#design-system)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Penjelasan Singkat
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Proyek ini adalah sistem informasi CMS (Content Management System) yang dirancang khusus untuk **Pusat Penjaminan Mutu Poltekkes Kemenkes Medan**. Aplikasi ini memfasilitasi publikasi dokumen, layanan, galeri, serta informasi profil dan tugas fungsi organisasi kepada publik secara interaktif. Di saat yang bersamaan, sistem ini menyediakan panel admin yang sangat dinamis untuk mengelola keseluruhan konten web secara seketika (real-time) tanpa perlu menyentuh kode sumber.
 
-## Learning Laravel
+## Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Framework Utama:** Laravel 11 (PHP 8.2+)
+- **Admin Panel (CMS):** Filament v3 (TALL Stack)
+- **Frontend / UI:** Livewire 3 & Blade Components Modern
+- **Styling:** Tailwind CSS
+- **Database:** MySQL (dengan Eloquent ORM)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Alur Aplikasi (Sequence Diagram)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Aplikasi ini memiliki alur interaksi yang sangat jelas berdasarkan peran sistem dan pengguna. Berikut adalah visualisasi alur atau Sequence Diagram aplikasinya:
 
-## Agentic Development
+**1. Alur Frontend (Interaksi Sistem ke Database)**
+![Sequence Frontend](seq_frontend.png)
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+**2. Alur Pengunjung (Interaksi Publik)**
+![Sequence Pengunjung](seq_pengunjung.png)
+
+**3. Alur Super Admin / Admin (Manajemen Konten)**
+![Sequence Super Admin](seq_super_admin.png)
+
+## Database & ERD (Entity Relationship Diagram)
+
+Skema database proyek ini dirancang secara terstruktur dengan relasi yang kuat (terproteksi oleh Parameterized Queries standar Laravel). Berikut adalah gambaran relasi antar entitas datanya:
+
+![ERD Diagram](erd_diagram.png)
+
+## Setup Project
+
+Berikut adalah langkah-langkah untuk menginstal dan menjalankan aplikasi ini di lingkungan lokal Anda:
+
+1. **Clone Repository:**
+
+    ```bash
+    git clone https://github.com/Qadri54/web-PPM.git
+    cd web-PPM
+    ```
+
+2. **Install Dependencies (PHP & Node):**
+
+    ```bash
+    composer install
+    npm install && npm run build
+    ```
+
+3. **Environment Setup:**
+   Salin file `.env.example` menjadi `.env`, lalu generate App Key:
+
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
+
+    _Jangan lupa untuk mengatur koneksi kredensial database Anda di file `.env` (misal: `DB_DATABASE=web_ppm`)._
+
+4. **Migrasi Database:**
+    ```bash
+    php artisan migrate
+    ```
+
+## Bagaimana Menjalankan Seeder
+
+Proyek ini dilengkapi dengan skrip seeder cerdas yang bertindak sebagai "Golden Backup". Skrip ini menampung seluruh snapshot data CMS awal (seperti Pengaturan Dasar, Banner, Tugas Fungsi, Kontak, hingga hirarki Dokumen).
+
+Untuk memuat semua data awal (termasuk akun default) ke dalam database secara otomatis, cukup jalankan perintah:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+php artisan db:seed
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+_(Akun masuk bawaan untuk admin dapat dilihat pada kelas `DatabaseSeeder.php`)_.
 
-## Contributing
+## Mapping Menu Admin ke Frontend
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Sistem CMS ini sepenuhnya terintegrasi secara dinamis. Berikut adalah pemetaan (mapping) rincian menu di Dasbor Admin (area `/admin`) dan dampaknya langsung pada halaman pengunjung (Frontend) saat data dimanipulasi:
 
-## Code of Conduct
+| Menu Admin Panel                   | Dampak di Halaman Pengunjung (Frontend)                                                                                                             |
+| :--------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Pengaturan**                     | Mengubah informasi kontak (Alamat, Telepon, Email, sematan Google Maps) di halaman **Kontak**, serta daftar Link Media Sosial di bagian **Footer**. |
+| **Banner**                         | Mengubah gambar slider/hero section utama beserta teks promonya di halaman **Beranda**.                                                             |
+| **Profil**                         | Mengubah konten teks/foto Kata Sambutan dan gambar Bagan Organisasi di halaman **Struktur Organisasi**.                                             |
+| **Tugas & Fungsi**                 | Menambah, mengurutkan, atau mengubah kartu-kartu penjelasan tupoksi pada halaman **Tugas & Fungsi**.                                                |
+| **Kategori Dokumen** & **Dokumen** | Mengelola dan mengkategorikan seluruh file / SOP yang dapat diunduh pada halaman **Dokumen & SOP**.                                                 |
+| **Galeri**                         | Mengubah foto dokumentasi kegiatan yang tampil pada halaman khusus **Galeri** dan sorotan 3 galeri terbaru di **Beranda**.                          |
+| **Layanan**                        | Mengelola daftar kartu fitur/layanan prioritas (lengkap beserta ikon & tautan) yang berjejer di **Beranda**.                                        |
+| **Link Terkait**                   | Mengelola logo mitra institusi pada seksi "Didukung & Bermitra Dengan" di halaman **Beranda**.                                                      |
+| **Pesan**                          | _(Satu arah)_ Membaca atau menghapus pesan kontak masuk (inbox) pengunjung yang dikirim dari form di halaman **Kontak**.                            |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Penjelasan RBAC (Role-Based Access Control)
 
-## Security Vulnerabilities
+Keamanan administratif dijaga ketat menggunakan kontrol akses berbasis peran (RBAC):
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Perlindungan pada level Middleware dan penguncian melalui interface `FilamentUser` pada model `User`.
+- **Hanya** pengguna dengan nilai kolom peran (`role`) sebagai `super_admin` atau `admin_operator` yang masuk daftar putih (Whitelist) untuk dapat memasuki dasbor `/admin`.
+- Akun tamu atau pengguna selain role di atas akan langsung ditolak aksesnya oleh sistem (403 Forbidden).
 
-## License
+## Design System
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Tema Utama & Identitas Visual:** Mengacu pada pedoman identitas institusi yang tenang namun tegas, proyek ini menggunakan warna utilitas Tailwind `blue-600` (`#2563EB`) sebagai identitas primer pada teks, tombol, hingga overlay komponen.
+- **Tipografi:** Menggunakan Google Font `Plus Jakarta Sans` demi tingkat keterbacaan (readability) yang maksimal dan modern.
+- **Layout & Panel Eksekutif:** Memiliki pendekatan khusus pada ruang admin, di antaranya dengan sengaja menonaktifkan fitur Dark Mode pada dasbor guna menjaga konsistensi tampilan dokumen, serta menerapkan struktur antarmuka halaman Profil Admin yang mengadaptasi gaya tumpuk (stacked cards) ala Laravel Breeze.
