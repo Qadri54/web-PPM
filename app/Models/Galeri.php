@@ -9,8 +9,18 @@ class Galeri extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'title',
-        'category_label', 'image_path', 'date_event', 'description'];
+    protected $fillable = [
+        'user_id', 
+        'title',
+        'category_label', 
+        'image_path', 
+        'date_event', 
+        'description'
+    ];
+
+    protected $casts = [
+        'date_event' => 'date',
+    ];
 
     public function user()
     {

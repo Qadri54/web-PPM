@@ -17,10 +17,17 @@
             <div class="group relative rounded-3xl overflow-hidden shadow-soft aspect-[4/3] bg-slate-200">
                 <img src="{{ $galeri->image_path ? asset('storage/' . $galeri->image_path) : 'https://via.placeholder.com/800x600/e2e8f0/475569?text=No+Image' }}" alt="{{ $galeri->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <span class="inline-block py-1 px-3 rounded-md bg-blue-500 text-white text-xs font-bold mb-3 shadow-lg">{{ $galeri->category_label ?? 'Kegiatan' }}</span>
+                <div class="absolute bottom-0 left-0 w-full p-8 translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">
+                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                        <span class="inline-block py-1 px-3 rounded-md bg-blue-500 text-white text-xs font-bold shadow-lg">{{ $galeri->category_label ?? 'Kegiatan' }}</span>
+                        @if($galeri->date_event)
+                        <span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-md bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-medium shadow-lg">
+                            <i class="fa-regular fa-calendar-alt"></i> {{ $galeri->date_event->translatedFormat('d M Y') }}
+                        </span>
+                        @endif
+                    </div>
                     <h4 class="text-xl font-bold text-white leading-tight mb-2">{{ $galeri->title }}</h4>
-                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-2">
+                    <p class="text-slate-300 text-sm opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-2">
                         {{ $galeri->description }}
                     </p>
                 </div>
