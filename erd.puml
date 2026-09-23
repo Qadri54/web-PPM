@@ -1,0 +1,131 @@
+@startuml
+
+entity "users" as users {
+  * id : bigint <<generated>>
+  --
+  * name : varchar(255)
+  * email : varchar(255) <<unique>>
+  * password : varchar(255)
+  role : enum('super_admin', 'admin_operator')
+  remember_token : varchar(100)
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "profils" as profils {
+  * id : bigint <<generated>>
+  --
+  user_id : bigint <<FK>>
+  sambutan_image : varchar(255)
+  sambutan_name : varchar(255)
+  sambutan_title : varchar(255)
+  sambutan_text : text
+  struktur_image : varchar(255)
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "pengaturans" as pengaturans {
+  * id : bigint <<generated>>
+  --
+  user_id : bigint <<FK>>
+  phone : varchar(255)
+  email : varchar(255)
+  address : text
+  google_maps_embed : text
+  social_media_links : json
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "banners" as banners {
+  * id : bigint <<generated>>
+  --
+  user_id : bigint <<FK>>
+  title : varchar(255)
+  subtitle : text
+  image_path : varchar(255)
+  is_active : boolean
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "kategori_dokumens" as kategori_dokumens {
+  * id : bigint <<generated>>
+  --
+  user_id : bigint <<FK>>
+  * name : varchar(255)
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "dokumens" as dokumens {
+  * id : bigint <<generated>>
+  --
+  * kategori_id : bigint <<FK>>
+  user_id : bigint <<FK>>
+  * code : varchar(255) <<unique>>
+  * name : varchar(255)
+  * file_path : varchar(255)
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "galeris" as galeris {
+  * id : bigint <<generated>>
+  --
+  user_id : bigint <<FK>>
+  * title : varchar(255)
+  * image_path : varchar(255)
+  description : text
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "layanans" as layanans {
+  * id : bigint <<generated>>
+  --
+  user_id : bigint <<FK>>
+  * title : varchar(255)
+  description : text
+  icon_path : varchar(255)
+  link_url : varchar(255)
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "tugas_fungsi" as tugas_fungsi {
+  * id : bigint <<generated>>
+  --
+  user_id : bigint <<FK>>
+  * title : varchar(255)
+  * description : text
+  * order : integer
+  * is_active : boolean
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "pesans" as pesans {
+  * id : bigint <<generated>>
+  --
+  * name : varchar(255)
+  * email : varchar(255)
+  * message : text
+  * is_read : boolean
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+' Relationships
+users ||--o{ profils : "creates/updates"
+users ||--o{ pengaturans : "creates/updates"
+users ||--o{ banners : "creates/updates"
+users ||--o{ kategori_dokumens : "creates/updates"
+users ||--o{ dokumens : "creates/updates"
+users ||--o{ galeris : "creates/updates"
+users ||--o{ layanans : "creates/updates"
+users ||--o{ tugas_fungsi : "creates/updates"
+kategori_dokumens ||--o{ dokumens : "has"
+
+@enduml
