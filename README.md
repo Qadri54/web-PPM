@@ -4,6 +4,7 @@
 
 - [Penjelasan Singkat](#penjelasan-singkat)
 - [Tech Stack](#tech-stack)
+- [Deployment & Infrastruktur](#deployment--infrastruktur)
 - [Alur Aplikasi (Sequence Diagram)](#alur-aplikasi-sequence-diagram)
 - [Database & ERD (Entity Relationship Diagram)](#database--erd-entity-relationship-diagram)
 - [Setup Project](#setup-project)
@@ -25,6 +26,15 @@ Proyek ini adalah sistem informasi CMS (Content Management System) yang dirancan
 - **Frontend / UI:** Livewire 3 & Blade Components Modern
 - **Styling:** Tailwind CSS
 - **Database:** MySQL (dengan Eloquent ORM)
+
+## Deployment & Infrastruktur
+
+Aplikasi ini di-deploy dan dihosting secara penuh pada lingkungan produksi (production) menggunakan infrastruktur berikut:
+
+- **Penyedia Layanan Server:** VPS Biznet Gio Cloud
+- **Sistem Operasi (OS):** Ubuntu
+- **Web Server:** Nginx
+- **Keamanan (SSL):** Certbot / Let's Encrypt (HTTPS)
 
 ## Alur Aplikasi (Sequence Diagram)
 
