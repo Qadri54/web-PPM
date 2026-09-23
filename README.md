@@ -118,4 +118,4 @@ Keamanan administratif dijaga ketat menggunakan kontrol akses berbasis peran (RB
 
 - **Tema Utama & Identitas Visual:** Mengacu pada pedoman identitas institusi yang tenang namun tegas, proyek ini menggunakan warna utilitas Tailwind `blue-600` (`#2563EB`) sebagai identitas primer pada teks, tombol, hingga overlay komponen.
 - **Tipografi:** Menggunakan Google Font `Plus Jakarta Sans` demi tingkat keterbacaan (readability) yang maksimal dan modern.
-- **Layout & Panel Eksekutif:** Memiliki pendekatan khusus pada ruang admin, di antaranya dengan sengaja menonaktifkan fitur Dark Mode pada dasbor guna menjaga konsistensi tampilan dokumen, serta menerapkan struktur antarmuka halaman Profil Admin yang mengadaptasi gaya tumpuk (stacked cards) ala Laravel Breeze.
+- **Layout & Panel Eksekutif:** Memiliki pendekatan khusus pada ruang admin, di antaranya dengan sengaja menonaktifkan fitur Dark Mode pada dasbor guna menjaga konsistensi tampilan dokumen
